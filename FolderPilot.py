@@ -9,29 +9,33 @@ SOURCE_FOLDER = r"D:\Downloads"
 # File categories
 FILE_TYPES = {
     "Images": [
-        ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".tiff", ".heic"
+        ".jpg", ".jpeg", ".png", ".gif", ".bmp", ".webp", ".tiff", ".heic",
+        ".raw", ".cr2", ".nef", ".arw", ".dng", ".ico"
     ],
     "Videos": [
-        ".mp4", ".mkv", ".avi", ".mov", ".wmv", ".flv", ".webm", ".m4v"
+        ".mp4", ".mkv", ".avi", ".mov", ".wmv", ".flv", ".webm", ".m4v",
+        ".mpeg", ".mpg", ".3gp", ".ts", ".mts", ".m2ts"
     ],
     "Music": [
-        ".mp3", ".wav", ".aac", ".ogg", ".flac", ".m4a"
+        ".mp3", ".wav", ".aac", ".ogg", ".flac", ".m4a", ".wma", ".alac", ".aiff"
     ],
     "Documents": [
         ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx",
-        ".txt", ".csv", ".rtf"
+        ".txt", ".csv", ".rtf", ".odt", ".ods", ".odp", ".md", ".json",
+        ".xml", ".html", ".htm", ".log", ".epub"
     ],
     "Archives": [
-        ".zip", ".rar", ".7z", ".tar", ".gz", ".bz2"
+        ".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz", ".iso.gz"
     ],
     "ISO": [
-        ".iso", ".img"
+        ".iso", ".img", ".dmg"
     ],
     "Programs": [
-        ".exe", ".msi", ".bat"
+        ".exe", ".msi", ".bat", ".app", ".apk", ".deb", ".pkg"
     ],
     "Scripts": [
-        ".py", ".ps1", ".js", ".vbs", ".cmd"
+        ".py", ".ps1", ".js", ".vbs", ".cmd", ".sh", ".ts", ".rb",
+        ".php", ".pl", ".go", ".lua", ".c", ".cpp", ".cs", ".java"
     ],
     "Torrents": [
         ".torrent"
