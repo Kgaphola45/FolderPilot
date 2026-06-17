@@ -1,8 +1,8 @@
 import os
 import shutil
+import argparse
 
-# Folder to organize
-SOURCE_FOLDER = r"D:\Downloads"
+DEFAULT_SOURCE_FOLDER = r"D:\Downloads"
 
 
 
@@ -14,30 +14,54 @@ FILE_TYPES = {
     ],
     "Videos": [
         ".mp4", ".mkv", ".avi", ".mov", ".wmv", ".flv", ".webm", ".m4v",
-        ".mpeg", ".mpg", ".3gp", ".ts", ".mts", ".m2ts"
+        ".mpeg", ".mpg", ".3gp", ".mts", ".m2ts"
     ],
     "Music": [
         ".mp3", ".wav", ".aac", ".ogg", ".flac", ".m4a", ".wma", ".alac", ".aiff"
     ],
     "Documents": [
+
+COMPOUND_EXTENSIONS = {
+    ".tar.gz": "Archives",
+    ".tar.bz2": "Archives",
+    ".tar.xz": "Archives",
+    ".iso.gz": "Archives",
+}
+
+
+def get_destination_folder(item_name):
+    lower_name = item_name.lower()
+
+    for compound_extension, category in COMPOUND_EXTENSIONS.items():
+        if lower_name.endswith(compound_extension):
+            return category
+
+    extension = os.path.splitext(lower_name)[1]
+
+    for category, extensions in FILE_TYPES.items():
+        if extension in extensions:
+            return category
+
+    return "Others"
         ".pdf", ".doc", ".docx", ".xls", ".xlsx", ".ppt", ".pptx",
-        ".txt", ".csv", ".rtf", ".odt", ".ods", ".odp", ".md", ".json",
-        ".xml", ".html", ".htm", ".log", ".epub"
-    ],
-    "Archives": [
+
+def organize_folder(folder, recursive=False):
+    if recursive:
+        items = []
+        for root, _, files in os.walk(folder):
+            for file_name in files:
+                items.append(os.path.join(root, file_name))
+    else:
+        items = [os.path.join(folder, item) for item in os.listdir(folder)]
+
+    for item_path in items:
+        item = os.path.basename(item_path)
         ".zip", ".rar", ".7z", ".tar", ".gz", ".bz2", ".xz", ".iso.gz"
     ],
     "ISO": [
         ".iso", ".img", ".dmg"
     ],
-    "Programs": [
-        ".exe", ".msi", ".bat", ".app", ".apk", ".deb", ".pkg"
-    ],
-    "Scripts": [
-        ".py", ".ps1", ".js", ".vbs", ".cmd", ".sh", ".ts", ".rb",
-        ".php", ".pl", ".go", ".lua", ".c", ".cpp", ".cs", ".java"
-    ],
-    "Torrents": [
+        destination_folder = get_destination_folder(item)
         ".torrent"
     ]
 }
@@ -81,6 +105,23 @@ def organize_folder(folder):
         shutil.move(item_path, destination)
         print(f"Moved: {item} -> {destination_folder}")
 
+
+def parse_args():
+    parser = argparse.ArgumentParser(description="Organize files into category folders.")
+    parser.add_argument(
+        "folder",
+        nargs="?",
+        default=DEFAULT_SOURCE_FOLDER,
+        help="Folder to organize",
+    )
+    parser.add_argument(
+        "--recursive",
+        action="store_true",
+        help="Organize files inside subfolders too",
+    )
+    return parser.parse_args()
+
 if __name__ == "__main__":
-    organize_folder(SOURCE_FOLDER)
+    args = parse_args()
+    organize_folder(args.folder, recursive=args.recursive)
     print("\nOrganization completed!")
