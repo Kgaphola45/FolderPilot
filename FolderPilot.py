@@ -129,12 +129,17 @@ def organize_folder(folder, recursive=False, dry_run=False):
         print(f"Moved: {item} -> {destination_folder}")
 
 
+def prompt_for_folder():
+    folder = input(f"Enter folder to organize [{DEFAULT_SOURCE_FOLDER}]: ").strip()
+    return folder or DEFAULT_SOURCE_FOLDER
+
+
 def parse_args():
     parser = argparse.ArgumentParser(description="Organize files into category folders.")
     parser.add_argument(
         "folder",
         nargs="?",
-        default=DEFAULT_SOURCE_FOLDER,
+        default=None,
         help="Folder to organize",
     )
     parser.add_argument(
@@ -152,5 +157,6 @@ def parse_args():
 
 if __name__ == "__main__":
     args = parse_args()
-    organize_folder(args.folder, recursive=args.recursive, dry_run=args.dry_run)
+    folder = args.folder or prompt_for_folder()
+    organize_folder(folder, recursive=args.recursive, dry_run=args.dry_run)
     print("\nOrganization completed!")
